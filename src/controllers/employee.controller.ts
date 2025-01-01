@@ -1,22 +1,10 @@
 import { Request, Response } from "express";
 import asyncHandler from "../middlewares/asyncHandler";
+import { EmployeeService } from "../services/employee.service";
 
-export const addEmployee = asyncHandler(
-  async (req: Request, res: Response) => {}
-);
+const employeeService = new EmployeeService();
 
-export const getAllEmployee = asyncHandler(
-  async (req: Request, res: Response) => {}
-);
-
-export const getEmployeeById = asyncHandler(
-  async (req: Request, res: Response) => {}
-);
-
-export const updateEmployee = asyncHandler(
-  async (req: Request, res: Response) => {}
-);
-
-export const deleteEmployee = asyncHandler(
-  async (req: Request, res: Response) => {}
-);
+export const addEmployee = asyncHandler(async (req: Request, res: Response) => {
+  const { message, data } = await employeeService.addEmployee(req.body);
+  res.status(201).json({ message, data });
+});

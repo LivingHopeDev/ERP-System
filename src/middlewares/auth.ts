@@ -72,7 +72,7 @@ export const adminMiddleware = async (
   next: NextFunction
 ) => {
   const user = req.user;
-  if (user?.accountType === "admin") {
+  if (user?.role === "admin") {
     next();
   } else {
     res.status(403).json({
