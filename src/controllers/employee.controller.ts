@@ -22,3 +22,12 @@ export const getAllEmployee = asyncHandler(
       .json({ message, data, totalPages, page: page || 1, limit: limit || 10 });
   }
 );
+
+export const updateEmployee = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const { message } = await employeeService.updateEmployee(id, req.body);
+    res.status(200).json({ message });
+  }
+);

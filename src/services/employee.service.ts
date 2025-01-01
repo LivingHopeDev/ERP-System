@@ -1,4 +1,5 @@
 import { prismaClient } from "..";
+import { Conflict, ResourceNotFound } from "../middlewares";
 import { IEmployee } from "../types";
 import { Employee, Role } from "@prisma/client";
 export class EmployeeService {
@@ -6,7 +7,12 @@ export class EmployeeService {
     payload: IEmployee
   ): Promise<{ message: string; data: any }> {
     const { name, role, salary, department, joiningDate, email } = payload;
-
+    const emailExist = await prismaClient.employee.findUnique({
+      where: { email },
+    });
+    if (emailExist) {
+      throw new Conflict("Email already exist");
+    }
     const newEmployee = await prismaClient.employee.create({
       data: {
         name,
@@ -56,4 +62,39 @@ export class EmployeeService {
     }
     return { message: "Employee records", data: employees, totalPages };
   }
-}
+  public async updateEmployee(
+    employeeId: string,
+    payload: Partial<IEmployee>
+  ): Promise<{ message: string }> {
+    const { name, salary, department, email, role } = payload;
+    const userExist = await prismaClient.user.findUnique({
+      where: {
+        employeeId,
+      },
+    });
+    if (!userExist) {
+      throw new ResourceNotFound("User not found");
+    }
+    await prismaClient.employee.update({
+      where: { id: employeeId },
+      data: {
+        name,
+        salary,
+        department,
+        email,
+      },
+    });
+    await prismaClient.user.update({
+      where: { id: userExist.id },
+      data: {
+        email,
+        role: role as Role,
+      },
+    });
+
+    return {
+      message: "Record updated",
+    };
+  }
+
+
