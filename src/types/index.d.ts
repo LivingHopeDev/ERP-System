@@ -5,7 +5,7 @@ declare module "express-serve-static-core" {
 }
 
 export interface IUserSignUp {
-  username: string;
+  name: string;
   email: string;
   password: string;
 }

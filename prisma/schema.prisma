@@ -29,6 +29,8 @@ model User {
   employee    Employee? @relation(fields: [employeeId], references: [id],onDelete: Cascade)
   employeeId  String?   @unique 
   session Session?
+
+  @@map("users")
 }
 
 model Employee {
@@ -42,6 +44,9 @@ model Employee {
   updatedAt   DateTime  @updatedAt
 
   user        User?
+
+    @@map("employees")
+
 }
 
 model Session {
