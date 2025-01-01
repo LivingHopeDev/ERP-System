@@ -2,6 +2,7 @@ import { Router } from "express";
 import { adminMiddleware, authMiddleware, validateData } from "../middlewares";
 import {
   addEmployee,
+  deleteEmployee,
   getAllEmployee,
   updateEmployee,
 } from "../controllers/employee.controller";
@@ -24,5 +25,5 @@ employeeRouter.patch(
   adminMiddleware,
   updateEmployee
 );
-
+employeeRouter.delete("/:id", authMiddleware, adminMiddleware, deleteEmployee);
 export { employeeRouter };

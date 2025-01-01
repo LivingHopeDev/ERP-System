@@ -2,6 +2,7 @@ import { prismaClient } from "..";
 import { Conflict, ResourceNotFound } from "../middlewares";
 import { IEmployee } from "../types";
 import { Employee, Role } from "@prisma/client";
+import { generateNumericOTP, hashPassword } from "../utils";
 export class EmployeeService {
   public async addEmployee(
     payload: IEmployee
@@ -23,9 +24,14 @@ export class EmployeeService {
       },
     });
     // Create a User record for the employee for login purposes
+    // generate a random password for each employee and send it to their registered email
+    const randomPassword = generateNumericOTP(6);
+    console.log(randomPassword);
+    const hashedPassword = await hashPassword(randomPassword);
     const user = await prismaClient.user.create({
       data: {
         email,
+        password: hashedPassword,
         role: role as Role,
         employeeId: newEmployee.id,
       },
@@ -97,4 +103,23 @@ export class EmployeeService {
     };
   }
 
+  public async deleteEmployee(
+    employeeId: string
+  ): Promise<{ message: string }> {
+    const userExist = await prismaClient.user.findUnique({
+      where: { employeeId },
+    });
+    if (!userExist) {
+      throw new ResourceNotFound("User not found");
+    }
+    await prismaClient.user.delete({
+      where: { id: userExist.id },
+    });
 
+    await prismaClient.employee.delete({
+      where: { id: employeeId },
+    });
+
+    return { message: "Employee deleted successfully" };
+  }
+}

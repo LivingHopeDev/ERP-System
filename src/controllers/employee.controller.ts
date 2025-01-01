@@ -31,3 +31,11 @@ export const updateEmployee = asyncHandler(
     res.status(200).json({ message });
   }
 );
+
+export const deleteEmployee = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { message } = await employeeService.deleteEmployee(id);
+    res.status(200).json({ message });
+  }
+);
