@@ -2,7 +2,7 @@ import { prismaClient } from "..";
 import { Conflict, ResourceNotFound } from "../middlewares";
 import { IEmployee } from "../types";
 import { Employee, Role } from "@prisma/client";
-import { generateNumericOTP, hashPassword } from "../utils";
+import { hashPassword } from "../utils";
 export class EmployeeService {
   public async addEmployee(
     payload: IEmployee
@@ -24,10 +24,9 @@ export class EmployeeService {
       },
     });
     // Create a User record for the employee for login purposes
-    // generate a random password for each employee and send it to their registered email
-    const randomPassword = generateNumericOTP(6);
-    console.log(randomPassword);
-    const hashedPassword = await hashPassword(randomPassword);
+    // Use a default password for employee; they can change it when they want.
+    const defaultPassword = "123456";
+    const hashedPassword = await hashPassword(defaultPassword);
     const user = await prismaClient.user.create({
       data: {
         email,
@@ -38,7 +37,7 @@ export class EmployeeService {
     });
 
     return {
-      message: "Employee created successfully",
+      message: "Employee added successfully",
       data: { employee: newEmployee, user },
     };
   }
@@ -78,6 +77,7 @@ export class EmployeeService {
         employeeId,
       },
     });
+    console.log({ userExist });
     if (!userExist) {
       throw new ResourceNotFound("User not found");
     }

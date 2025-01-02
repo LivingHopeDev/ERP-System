@@ -5,8 +5,6 @@ import rootRouter from "./routes";
 import { PrismaClient } from "@prisma/client";
 import { errorHandler, routeNotFound } from "./middlewares";
 import log from "./utils/logger";
-
-import { Request, Response } from "express";
 import { serve, setup } from "swagger-ui-express";
 import swaggerSpec from "./config/swaggerConfig";
 
