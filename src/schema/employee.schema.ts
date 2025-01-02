@@ -8,3 +8,5 @@ export const EmployeeSchema = z.object({
   salary: z.number().positive("Salary must be a positive number"),
   joiningDate: z.string(),
 });
+
+
