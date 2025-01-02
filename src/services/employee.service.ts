@@ -72,15 +72,29 @@ export class EmployeeService {
     payload: Partial<IEmployee>
   ): Promise<{ message: string }> {
     const { name, salary, department, email, role } = payload;
+
     const userExist = await prismaClient.user.findUnique({
       where: {
         employeeId,
       },
     });
-    console.log({ userExist });
+
     if (!userExist) {
       throw new ResourceNotFound("User not found");
     }
+
+    if (email && email !== userExist.email) {
+      const emailExists = await prismaClient.user.findUnique({
+        where: {
+          email: email,
+        },
+      });
+
+      if (emailExists) {
+        throw new Conflict("Email is already in use by another user");
+      }
+    }
+
     await prismaClient.employee.update({
       where: { id: employeeId },
       data: {
@@ -90,6 +104,7 @@ export class EmployeeService {
         email,
       },
     });
+
     await prismaClient.user.update({
       where: { id: userExist.id },
       data: {
@@ -99,7 +114,7 @@ export class EmployeeService {
     });
 
     return {
-      message: "Record updated",
+      message: "Record updated successfully",
     };
   }
 

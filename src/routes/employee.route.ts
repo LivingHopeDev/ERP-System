@@ -6,7 +6,10 @@ import {
   getAllEmployee,
   updateEmployee,
 } from "../controllers/employee.controller";
-import { EmployeeSchema } from "../schema/employee.schema";
+import {
+  EmployeeSchema,
+  updateEmployeeSchema,
+} from "../schema/employee.schema";
 const employeeRouter: Router = Router();
 
 employeeRouter.post(
@@ -20,7 +23,7 @@ employeeRouter.post(
 employeeRouter.get("/", authMiddleware, adminMiddleware, getAllEmployee);
 employeeRouter.patch(
   "/:id",
-  validateData(EmployeeSchema),
+  validateData(updateEmployeeSchema),
   authMiddleware,
   adminMiddleware,
   updateEmployee
