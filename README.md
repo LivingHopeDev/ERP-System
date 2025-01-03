@@ -2,15 +2,9 @@
 
 This is a mini HR ERP system module that allows:
 
-Admins to manage employee records (CRUD operations).
-Employees to view and update their profiles.
-Basic analytics on employee data, such as headcount by department.
-
-# Features
-
-- Admin can perform CRUD operations on employee records.
-- Employee can view and update their profile (except salary and role).
-- Basic analytics API to get the total number of employees and the number of employees in each department.
+- Admins to manage employee records (CRUD operations).
+- Employees to view and update their profiles.
+- Basic analytics on employee data, such as headcount by department.
 
 ## Table of Contents
 
@@ -30,24 +24,21 @@ Basic analytics on employee data, such as headcount by department.
 
 ## Live url
 
-`https://library-management-system-api-8xi8.onrender.com/api/`
+`https://..../api/`
 
 - Please note that the Postgres Database hosted with render will become inactive a month after deployment.
 
 ## Features
 
-- User Registration & Authentication: Allows users to create accounts, log in, and manage their profiles.
-- Book Browsing: Users can search for available books, view details like genre, description, and author.
-- Borrowing Books: Users can borrow books if available, with due dates and borrowing limits.
-- Renewing Books: Users can extend the borrowing period by renewing their books if there are available copies, they are within the borrow period and no reservations will be affected.
-- Book Reservation: Users can reserve books if they are currently unavailable and they can add the date it is needed. Reserved books will be made available once returned.
-- Account Management: Users can update their profiles and check their borrowing history.
-- Admin Controls: Admins can manage book collections, users, fines.
+- Admin can perform CRUD operations on employee records.
+- Employee can view and update their profile (except salary and role).
+- Basic analytics API to get the total number of employees and the number of employees in each department.
+- Generate a default password for all registered employees (123456)
 
 ## Technology Stack
 
-- **Backend:** Node.js with Express.js, Redis for background job
-- **Database:** PostgreSQL with Prisma
+- **Backend:** Node.js with Express.js.
+- **Database:** PostgreSQL with Prisma.
 - **Hosting:** Render
 
 ## Project Setup
@@ -66,8 +57,8 @@ Before setting up the project, ensure you have the following installed:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/LivingHopeDev/library-management-system-API.git
-   cd library-management-system-API
+   git clone https://github.com/LivingHopeDev/ERP-System.git
+   cd ERP-System
    ```
 
 2. **Install dependencies:**
@@ -114,16 +105,8 @@ yarn prisma migrate dev
 
 Visit the url below to view the documentation
 live url
-`https://library-management-system-api-8xi8.onrender.com/api/docs/`
+`https://..../api/docs/`
 `localhost:8070/api/docs`
-
-### Acknowledgement
-
-- **Idea Source:** The idea for this Library Management System was inspired by Solomon Eseme, the founder of Mastering Backend. `https://app.masteringbackend.com/projects/build-your-own-library-management-system`
-
-### Contributing
-
-Contributions are welcome!
 
 ### License
 
