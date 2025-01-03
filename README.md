@@ -91,6 +91,12 @@ yarn run start:dev
 
 ```
 
+#### Default Admin login details
+
+```json
+{ "email": "admin@mail.com", "password": "123456" }
+```
+
 #### Access the application
 
 The server will start on the specified PORT in your .env file. If PORT is set to 8000, the application will be available at <http://localhost:8070>.

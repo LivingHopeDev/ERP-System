@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_route_1 = require("./auth.route");
+const employee_route_1 = require("./employee.route");
+const profile_route_1 = require("./profile.route");
+const dashboard_route_1 = require("./dashboard.route");
+const rootRouter = (0, express_1.Router)();
+rootRouter.use("/auth", auth_route_1.authRouter);
+rootRouter.use("/employee", employee_route_1.employeeRouter);
+rootRouter.use("/profile", profile_route_1.profileRouter);
+rootRouter.use("/dashboard", dashboard_route_1.dashboardRouter);
+exports.default = rootRouter;
