@@ -63,7 +63,13 @@ export class AuthService {
     };
   }
 
-  public async sendCrendentials(employeeId: string) {}
-  public async forgotPassword(employeeId: string, payload) {}
-  public async deleteEmployee(employeeId: string) {}
+  public async logout(userId: string, token: string): Promise<{ message }> {
+    await prismaClient.session.delete({
+      where: { userId, sessionToken: token },
+    });
+
+    return {
+      message: "Logout sucessful",
+    };
+  }
 }

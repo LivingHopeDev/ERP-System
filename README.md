@@ -24,7 +24,7 @@ This is a mini HR ERP system module that allows:
 
 ## Live url
 
-`https://..../api/`
+`https://https://erp-system-njra.onrender.com/api/v1/`
 
 - Please note that the Postgres Database hosted with render will become inactive a month after deployment.
 
@@ -111,7 +111,7 @@ yarn prisma migrate dev
 
 Visit the url below to view the documentation
 live url
-`https://..../api/docs/`
+`https://https://erp-system-njra.onrender.com/api/docs/`
 `localhost:8070/api/docs`
 
 ### License
