@@ -113,3 +113,32 @@ export const loginUser = `
  *         description: Some server error
  */
 `;
+
+export const logoutUser = `
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Log out a user
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: [] # Token required
+ *     requestBody:
+ *       required: false
+ *     responses:
+ *       200:
+ *         description: Successfully logged out
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Logout successful"
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
+ *       500:
+ *         description: Some server error
+ */
+`;
