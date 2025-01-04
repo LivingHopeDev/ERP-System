@@ -68,14 +68,15 @@ class AuthService {
             };
         });
     }
-    sendCrendentials(employeeId) {
-        return __awaiter(this, void 0, void 0, function* () { });
-    }
-    forgotPassword(employeeId, payload) {
-        return __awaiter(this, void 0, void 0, function* () { });
-    }
-    deleteEmployee(employeeId) {
-        return __awaiter(this, void 0, void 0, function* () { });
+    logout(userId, token) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield __1.prismaClient.session.delete({
+                where: { userId, sessionToken: token },
+            });
+            return {
+                message: "Logout sucessful",
+            };
+        });
     }
 }
 exports.AuthService = AuthService;

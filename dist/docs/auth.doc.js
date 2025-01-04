@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.registerUser = void 0;
+exports.logoutUser = exports.loginUser = exports.registerUser = void 0;
 exports.registerUser = `
 /**
  * @swagger
@@ -111,6 +111,34 @@ exports.loginUser = `
  *         description: Authentication failed, user not found or incorrect credentials
  *       400:
  *         description: Bad request, invalid input data
+ *       500:
+ *         description: Some server error
+ */
+`;
+exports.logoutUser = `
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     summary: Log out a user
+ *     tags: [Authentication]
+ *     security:
+ *       - bearerAuth: [] # Token required
+ *     requestBody:
+ *       required: false
+ *     responses:
+ *       200:
+ *         description: Successfully logged out
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Logout successful"
+ *       401:
+ *         description: Unauthorized - Invalid or missing token
  *       500:
  *         description: Some server error
  */

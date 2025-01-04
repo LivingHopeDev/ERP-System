@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resetPassword = exports.forgotPassword = exports.sendCrendentials = exports.login = exports.register = void 0;
+exports.logout = exports.login = exports.register = void 0;
 const asyncHandler_1 = __importDefault(require("../middlewares/asyncHandler"));
 const auth_service_1 = require("../services/auth.service");
 const authService = new auth_service_1.AuthService();
@@ -24,6 +24,9 @@ exports.login = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void
     const { message, user, token } = yield authService.login(req.body);
     res.status(200).json({ status: 200, message, data: { token, user } });
 }));
-exports.sendCrendentials = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { }));
-exports.forgotPassword = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { }));
-exports.resetPassword = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { }));
+exports.logout = (0, asyncHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.headers.authorization.split(" ")[1];
+    const userId = req.user.id;
+    const { message } = yield authService.logout(userId, token);
+    res.status(200).json({ message: message });
+}));
