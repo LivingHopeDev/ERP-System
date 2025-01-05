@@ -17,6 +17,7 @@ This is a mini HR ERP system module that allows:
   - [Environment Variables](#environment-variables)
   - [Running the Application](#running-the-application)
   - [Database Migrations](#database-migrations)
+- [Run Test](#run-test)
 - [API Documentation](#api-documentation)
 - [Acknowledgement](#Acknowledgement)
 - [Contributing](#contributing)
@@ -105,6 +106,12 @@ The server will start on the specified PORT in your .env file. If PORT is set to
 
 ```
 yarn prisma migrate dev
+```
+
+### Run Test
+
+```
+yarn test
 ```
 
 ### API Documentation

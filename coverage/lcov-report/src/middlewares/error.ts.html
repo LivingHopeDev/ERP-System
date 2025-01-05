@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.54% </span>
+                <span class="strong">59.45% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/37</span>
+                <span class='fraction'>22/37</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">36.36% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>4/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">40.54% </span>
+                <span class="strong">59.45% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/37</span>
+                <span class='fraction'>22/37</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -172,30 +172,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -208,6 +202,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -275,24 +275,24 @@ import log from "../utils/logger";
 &nbsp;
 class HttpError extends Error {
   status_code: number;
-<span class="cstat-no" title="statement not covered" >  success: boolean = false;</span>
+  success: boolean = false;
 &nbsp;
-<span class="fstat-no" title="function not covered" >  constructor(s</span>tatusCode: number, message: string) {
-<span class="cstat-no" title="statement not covered" >    super(message);</span>
-<span class="cstat-no" title="statement not covered" >    this.name = this.constructor.name;</span>
-<span class="cstat-no" title="statement not covered" >    this.status_code = statusCode;</span>
+  constructor(statusCode: number, message: string) {
+    super(message);
+    this.name = this.constructor.name;
+    this.status_code = statusCode;
   }
 }
 &nbsp;
 class BadRequest extends HttpError {
-<span class="fstat-no" title="function not covered" >  constructor(m</span>essage: string) {
-<span class="cstat-no" title="statement not covered" >    super(400, message);</span>
+  constructor(message: string) {
+    super(400, message);
   }
 }
 &nbsp;
 class ResourceNotFound extends HttpError {
-<span class="fstat-no" title="function not covered" >  constructor(m</span>essage: string) {
-<span class="cstat-no" title="statement not covered" >    super(404, message);</span>
+  constructor(message: string) {
+    super(404, message);
   }
 }
 &nbsp;
@@ -309,8 +309,8 @@ class Unauthorised extends HttpError {
 }
 &nbsp;
 class Conflict extends HttpError {
-<span class="fstat-no" title="function not covered" >  constructor(m</span>essage: string) {
-<span class="cstat-no" title="statement not covered" >    super(409, message);</span>
+  constructor(message: string) {
+    super(409, message);
   }
 }
 &nbsp;
@@ -379,7 +379,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-05T01:38:50.454Z
+                at 2025-01-05T02:08:55.975Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

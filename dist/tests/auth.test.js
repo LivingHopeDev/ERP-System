@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const auth_service_1 = require("../services/auth.service");
 const __1 = require("..");
 const utils_1 = require("../utils");
+const middlewares_1 = require("../middlewares");
 jest.mock("../utils");
 jest.mock("..", () => ({
     prismaClient: {
@@ -33,7 +34,6 @@ describe("AuthService - signup", () => {
             password: "1234",
         };
         const mockHashedPassword = "hashedpassword";
-        // Mock dependencies
         __1.prismaClient.user.findFirst.mockResolvedValueOnce(null);
         utils_1.hashPassword.mockResolvedValueOnce(mockHashedPassword);
         const mockUser = {
@@ -41,10 +41,7 @@ describe("AuthService - signup", () => {
             email: mockPayload.email,
         };
         __1.prismaClient.user.create.mockResolvedValueOnce(mockUser);
-        const mockOtp = { token: "123456" };
-        // Call the method
         const result = yield authService.register(mockPayload);
-        // Assertions
         expect(__1.prismaClient.user.findFirst).toHaveBeenCalledWith({
             where: { email: mockPayload.email },
         });
@@ -60,6 +57,53 @@ describe("AuthService - signup", () => {
                 email: mockUser.email,
             },
             message: "User Created Successfully.",
+        });
+    }));
+    it("should throw an error if user already exist ", () => __awaiter(void 0, void 0, void 0, function* () {
+        const mockPayload = {
+            email: "user@mail.com",
+            username: "adetayo",
+            password: "1234",
+        };
+        const existingUser = {
+            id: 1,
+            username: "adetayo",
+            email: "user@mail.com",
+            password: "hashedpassword",
+        };
+        __1.prismaClient.user.findFirst.mockResolvedValue(existingUser);
+        yield expect(authService.register(mockPayload)).rejects.toThrow(new middlewares_1.Conflict("User already exists"));
+        expect(__1.prismaClient.user.findFirst).toHaveBeenCalledWith({
+            where: { email: mockPayload.email },
+        });
+    }));
+});
+describe("Authservice - login", () => {
+    const mockpayload = {
+        email: "user@mail.com",
+        password: "1234",
+    };
+    it("should throw error if user doesn't exist", () => __awaiter(void 0, void 0, void 0, function* () {
+        __1.prismaClient.user.findFirst.mockResolvedValueOnce(null);
+        yield expect(authService.login(mockpayload)).rejects.toThrow(new middlewares_1.ResourceNotFound("Authentication failed"));
+        expect(__1.prismaClient.user.findFirst).toHaveBeenCalledWith({
+            where: { email: mockpayload.email },
+        });
+    }));
+    it("should throw error when user exist but the password is wrong", () => __awaiter(void 0, void 0, void 0, function* () {
+        const existingUser = {
+            id: 1,
+            username: "adetayo",
+            email: "user@mail.com",
+            is_verified: true,
+        };
+        __1.prismaClient.user.findFirst.mockResolvedValueOnce(existingUser);
+        utils_1.comparePassword.mockResolvedValueOnce(false);
+        yield expect(authService.login(mockpayload)).rejects.toThrow(new middlewares_1.BadRequest("Authentication failed"));
+        expect(__1.prismaClient.user.findFirst).toHaveBeenCalledWith({
+            where: {
+                email: mockpayload.email,
+            },
         });
     }));
 });
