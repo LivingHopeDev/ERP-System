@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/16</span>
+                <span class='fraction'>0/16</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/14</span>
+                <span class='fraction'>0/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -90,54 +90,54 @@
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
 <a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L28'></a><a href='#L28'>28</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import config from "../config";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-export async function <span class="fstat-no" title="function not covered" >hashPassword(</span>password: string): Promise&lt;string&gt; {
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import config from "../config";</span>
+<span class="cstat-no" title="statement not covered" >import bcrypt from "bcrypt";</span>
+<span class="cstat-no" title="statement not covered" >import jwt from "jsonwebtoken";</span>
+<span class="cstat-no" title="statement not covered" >export async function <span class="fstat-no" title="function not covered" >h</span>ashPassword(</span>password: string): Promise&lt;string&gt; {
 <span class="cstat-no" title="statement not covered" >  return await bcrypt.hash(password, 10);</span>
 }
 &nbsp;
-export async function <span class="fstat-no" title="function not covered" >comparePassword(</span>
+<span class="cstat-no" title="statement not covered" >export async function <span class="fstat-no" title="function not covered" >c</span>omparePassword(</span>
   password: string,
   hashedPassword: string
 ): Promise&lt;boolean&gt; {
 <span class="cstat-no" title="statement not covered" >  return await bcrypt.compare(password, hashedPassword);</span>
 }
 &nbsp;
-export async function <span class="fstat-no" title="function not covered" >generateAccessToken(</span>userId: string) {
+<span class="cstat-no" title="statement not covered" >export async function <span class="fstat-no" title="function not covered" >g</span>enerateAccessToken(</span>userId: string) {
 <span class="cstat-no" title="statement not covered" >  return await jwt.sign({ userId }, config.TOKEN_SECRET!, {</span>
     expiresIn: config.TOKEN_EXPIRY,
   });
 }
 &nbsp;
-export const generateNumericOTP = <span class="fstat-no" title="function not covered" >(l</span>ength: number): string =&gt; {
+export const <span class="cstat-no" title="statement not covered" >generateNumericOTP = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(</span>l</span>ength: number): string =&gt; {</span>
   let otp = <span class="cstat-no" title="statement not covered" >"";</span>
 <span class="cstat-no" title="statement not covered" >  for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; length; i++) {</span>
 <span class="cstat-no" title="statement not covered" >    otp += Math.floor(Math.random() * 9 + 1).toString();</span>
@@ -151,7 +151,7 @@ export const generateNumericOTP = <span class="fstat-no" title="function not cov
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-06T09:16:54.535Z
+                at 2025-01-06T09:26:00.490Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
