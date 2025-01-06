@@ -20,6 +20,9 @@ jest.mock("..", () => ({
             findFirst: jest.fn(),
             create: jest.fn(),
         },
+        session: {
+            upsert: jest.fn(),
+        },
     },
 }));
 let authService;
@@ -83,6 +86,49 @@ describe("Authservice - login", () => {
         email: "user@mail.com",
         password: "1234",
     };
+    it("should log user in when the email and password are correct", () => __awaiter(void 0, void 0, void 0, function* () {
+        const existingUser = {
+            id: 2,
+            username: "adetayo",
+            email: "user@mail.com",
+            password: "hashedpassword",
+            role: "user",
+        };
+        const mockAccessToken = "mockedAccessToken";
+        const mockExpiresAt = new Date();
+        mockExpiresAt.setDate(mockExpiresAt.getDate() + 70);
+        __1.prismaClient.user.findFirst.mockResolvedValueOnce(existingUser);
+        utils_1.comparePassword.mockResolvedValueOnce(true);
+        utils_1.generateAccessToken.mockResolvedValueOnce(mockAccessToken);
+        __1.prismaClient.session.upsert.mockResolvedValueOnce({
+            userId: existingUser.id,
+            sessionToken: mockAccessToken,
+            expiresAt: mockExpiresAt,
+        });
+        const result = yield authService.login(mockpayload);
+        expect(__1.prismaClient.user.findFirst).toHaveBeenCalledWith({
+            where: { email: mockpayload.email },
+        });
+        expect(utils_1.comparePassword).toHaveBeenCalledWith(mockpayload.password, existingUser.password);
+        expect(utils_1.generateAccessToken).toHaveBeenCalledWith(existingUser.id);
+        expect(__1.prismaClient.session.upsert).toHaveBeenCalledWith({
+            where: { userId: existingUser.id },
+            update: { sessionToken: mockAccessToken, expiresAt: mockExpiresAt },
+            create: {
+                userId: existingUser.id,
+                sessionToken: mockAccessToken,
+                expiresAt: mockExpiresAt,
+            },
+        });
+        expect(result).toEqual({
+            message: "Login Successfully",
+            user: {
+                email: existingUser.email,
+                role: existingUser.role,
+            },
+            token: mockAccessToken,
+        });
+    }));
     it("should throw error if user doesn't exist", () => __awaiter(void 0, void 0, void 0, function* () {
         __1.prismaClient.user.findFirst.mockResolvedValueOnce(null);
         yield expect(authService.login(mockpayload)).rejects.toThrow(new middlewares_1.ResourceNotFound("Authentication failed"));

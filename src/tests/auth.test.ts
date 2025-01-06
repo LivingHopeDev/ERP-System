@@ -20,6 +20,9 @@ jest.mock("..", () => ({
       findFirst: jest.fn(),
       create: jest.fn(),
     },
+    session: {
+      upsert: jest.fn(),
+    },
   },
 }));
 
@@ -96,6 +99,61 @@ describe("Authservice - login", () => {
     email: "user@mail.com",
     password: "1234",
   };
+  it("should log user in when the email and password are correct", async () => {
+    const existingUser = {
+      id: 2,
+      username: "adetayo",
+      email: "user@mail.com",
+      password: "hashedpassword",
+      role: "user",
+    };
+
+    const mockAccessToken = "mockedAccessToken";
+    const mockExpiresAt = new Date();
+    mockExpiresAt.setDate(mockExpiresAt.getDate() + 70);
+
+    (prismaClient.user.findFirst as jest.Mock).mockResolvedValueOnce(
+      existingUser
+    );
+    (comparePassword as jest.Mock).mockResolvedValueOnce(true);
+    (generateAccessToken as jest.Mock).mockResolvedValueOnce(mockAccessToken);
+    (prismaClient.session.upsert as jest.Mock).mockResolvedValueOnce({
+      userId: existingUser.id,
+      sessionToken: mockAccessToken,
+      expiresAt: mockExpiresAt,
+    });
+
+    const result = await authService.login(mockpayload);
+
+    expect(prismaClient.user.findFirst as jest.Mock).toHaveBeenCalledWith({
+      where: { email: mockpayload.email },
+    });
+    expect(comparePassword as jest.Mock).toHaveBeenCalledWith(
+      mockpayload.password,
+      existingUser.password
+    );
+    expect(generateAccessToken as jest.Mock).toHaveBeenCalledWith(
+      existingUser.id
+    );
+    expect(prismaClient.session.upsert as jest.Mock).toHaveBeenCalledWith({
+      where: { userId: existingUser.id },
+      update: { sessionToken: mockAccessToken, expiresAt: mockExpiresAt },
+      create: {
+        userId: existingUser.id,
+        sessionToken: mockAccessToken,
+        expiresAt: mockExpiresAt,
+      },
+    });
+
+    expect(result).toEqual({
+      message: "Login Successfully",
+      user: {
+        email: existingUser.email,
+        role: existingUser.role,
+      },
+      token: mockAccessToken,
+    });
+  });
   it("should throw error if user doesn't exist", async () => {
     (prismaClient.user.findFirst as jest.Mock).mockResolvedValueOnce(null);
 
