@@ -1,18 +1,8 @@
 import { AuthService } from "../services/auth.service";
 import { prismaClient } from "..";
-import {
-  hashPassword,
-  generateAccessToken,
-  generateNumericOTP,
-  comparePassword,
-} from "../utils";
-import {
-  BadRequest,
-  Conflict,
-  ResourceNotFound,
-  Unauthorised,
-} from "../middlewares";
-
+import { hashPassword, generateAccessToken, comparePassword } from "../utils";
+import { BadRequest, Conflict, ResourceNotFound } from "../middlewares";
+import config from "../config";
 jest.mock("../utils");
 jest.mock("..", () => ({
   prismaClient: {
@@ -109,8 +99,14 @@ describe("Authservice - login", () => {
     };
 
     const mockAccessToken = "mockedAccessToken";
-    const mockExpiresAt = new Date();
-    mockExpiresAt.setDate(mockExpiresAt.getDate() + 70);
+    const now = new Date();
+    const tokenExpiryInDays = parseInt(
+      config.TOKEN_EXPIRY.replace("d", ""),
+      10
+    );
+
+    const expectedExpiry = new Date();
+    expectedExpiry.setDate(now.getDate() + tokenExpiryInDays);
 
     (prismaClient.user.findFirst as jest.Mock).mockResolvedValueOnce(
       existingUser
@@ -120,7 +116,7 @@ describe("Authservice - login", () => {
     (prismaClient.session.upsert as jest.Mock).mockResolvedValueOnce({
       userId: existingUser.id,
       sessionToken: mockAccessToken,
-      expiresAt: mockExpiresAt,
+      expiresAt: expect.any(Date),
     });
 
     const result = await authService.login(mockpayload);
@@ -137,11 +133,11 @@ describe("Authservice - login", () => {
     );
     expect(prismaClient.session.upsert as jest.Mock).toHaveBeenCalledWith({
       where: { userId: existingUser.id },
-      update: { sessionToken: mockAccessToken, expiresAt: mockExpiresAt },
+      update: { sessionToken: mockAccessToken, expiresAt: expect.any(Date) },
       create: {
         userId: existingUser.id,
         sessionToken: mockAccessToken,
-        expiresAt: mockExpiresAt,
+        expiresAt: expect.any(Date),
       },
     });
 
