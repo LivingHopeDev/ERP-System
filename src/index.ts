@@ -13,7 +13,7 @@ const port = config.PORT;
 app.use(express.json());
 app.use(cors());
 
-app.get("/api", (req, res) => {
+app.get("/api/v1", (req, res) => {
   res.json({
     status: "success",
     message:
